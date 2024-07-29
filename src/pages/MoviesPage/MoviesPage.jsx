@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
-import UsersList from "../../components/UsersList/UsersList";
-import { fetchUsers } from "../../services/api";
+import MoviesList from "../../components/MoviesList/MoviesList";
+import { fetchTrends } from "../../services/api";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { useSearchParams } from "react-router-dom";
 
-const Users = () => {
-  const [users, setUsers] = useState([]);
+const MoviesPage = () => {
+  const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const filterValue = searchParams.get("query") ?? "";
   useEffect(() => {
     try {
       const getData = async () => {
-        const data = await fetchUsers();
-        setUsers(data);
+        const data = await fetchTrends();
+        setMovies(data);
+        console.log(movies);
       };
       getData();
     } catch (error) {
@@ -30,11 +31,11 @@ const Users = () => {
     setSearchParams(searchParams);
   };
 
-  const filteredData = users.filter(
-    (user) =>
-      user.firstName.toLowerCase().includes(filterValue.toLowerCase()) ||
-      user.lastName.toLowerCase().includes(filterValue.toLowerCase())
-  );
+  // const filteredData = movies.filter(
+  //   (movie) =>
+  //     movie.firstName.toLowerCase().includes(filterValue.toLowerCase()) ||
+  //     movie.lastName.toLowerCase().includes(filterValue.toLowerCase())
+  // );
 
   return (
     <>
@@ -42,10 +43,8 @@ const Users = () => {
         handleChangeFilter={handleChangeFilter}
         filterValue={filterValue}
       />
-      <UsersList users={filteredData} />
+      {/* <MoviesList movies={filteredData} /> */}
     </>
   );
 };
-export default Users;
-// http://localhost:5173/users
-// http://localhost:5173/users/
+export default MoviesPage;

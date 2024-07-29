@@ -1,17 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import Header from "./Header/Header";
-import Home from "../pages/Home/Home";
-import About from "../pages/About/About";
-import NotFound from "../pages/NotFound/NotFound";
-// import Users from "../pages/Users/Users";
-// import UserDetails from "./UserDetails/UserDetails";
-// import UserPosts from "./UserPosts/UserPosts";
-import UserAddress from "./UserAddress/UserAddress";
+import HomePage from "../pages/HomePage/HomePage";
+import MovieDetailsPage from "../pages/MovieDetailsPage/MovieDetailsPage";
+import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
+import MoviesPage from "../pages/MoviesPage/MoviesPage";
+import MovieCast from "./MovieCast/MovieCast";
+import MovieReviews from "./MovieReviews/MovieReviews";
 import { lazy, Suspense } from "react";
-
-const Users = lazy(() => import("../pages/Users/Users"));
-const UserDetails = lazy(() => import("./UserDetails/UserDetails"));
-const UserPosts = lazy(() => import("./UserPosts/UserPosts"));
 
 export const App = () => {
   return (
@@ -19,14 +14,13 @@ export const App = () => {
       <Header />
       <Suspense fallback={<h2>Loading your page</h2>}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/users/:userId" element={<UserDetails />}>
-            <Route path="address" element={<UserAddress />} />
-            <Route path="posts" element={<UserPosts />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/movies" element={<MoviesPage />} />
+          <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
+            <Route path="cast" element={<MovieCast />} />
+            <Route path="reviews" element={<MovieReviews />} />
           </Route>
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     </div>

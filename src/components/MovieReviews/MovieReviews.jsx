@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchUsersById } from "../../services/api";
+import { fetchReviews } from "../../services/api";
 
 const UserAddress = () => {
   const params = useParams();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetchUsersById(params.userId).then((data) => setUser(data));
+    fetchReviews(params.userId).then((data) => setUser(data));
   }, [params.userId]);
 
   if (!user) {

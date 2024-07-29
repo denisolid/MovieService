@@ -18,13 +18,8 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink className={buildLinkClass} to="/about">
-              About
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className={buildLinkClass} to="/users">
-              Users
+            <NavLink className={buildLinkClass} to="/movies">
+              Movies
             </NavLink>
           </li>
         </ul>

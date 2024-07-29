@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchPostsById } from "../../services/api";
+import { fetchCredits } from "../../services/api";
 
 const UserPosts = () => {
   const params = useParams();
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    fetchPostsById(params.userId).then((data) => setPosts(data));
+    fetchCredits(params.userId).then((data) => setPosts(data));
   }, [params.userId]);
   return (
     <div>
