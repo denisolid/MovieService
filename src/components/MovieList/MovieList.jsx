@@ -8,14 +8,13 @@ const MovieList = ({ movies, children, state }) => {
         <h1>{children}</h1>
         <ul className={s.movieList}>
           {movies.map(({ title, id, poster_path }) => (
-            <li key={id} className={s.movieItem}>
+            <li key={id} className={s.movieCard}>
               <img
                 src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
                 alt={title}
-                height={120}
               />
               <Link to={`/movies/${id}`} state={state}>
-                {title}
+                <p>{title}</p>
               </Link>
             </li>
           ))}
