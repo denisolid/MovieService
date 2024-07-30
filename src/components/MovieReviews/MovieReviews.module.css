@@ -1,0 +1,18 @@
+.movieReviews {
+  background-color: #222; /* Темніший фон для секції рев'ю */
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.movieReviews h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.review {
+  background: #333;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
