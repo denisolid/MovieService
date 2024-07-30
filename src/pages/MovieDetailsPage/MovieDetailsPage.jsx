@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Routes, Route, Link, useLocation } from "react-router-dom";
-import { fetchMovieDetails } from "../services/api";
-import MovieCast from "../components/MovieCast/MovieCast";
-import MovieReviews from "../components/MovieReviews/MovieReviews";
+import { fetchMovieDetails } from "../../services/api";
+import MovieCast from "../../components/MovieCast/MovieCast";
+import MovieReviews from "../../components/MovieReviews/MovieReviews";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
@@ -34,8 +34,8 @@ const MovieDetailsPage = () => {
             alt={movie.title}
           />
           <nav>
-            <Link to="cast">Cast</Link>
-            <Link to="reviews">Reviews</Link>
+            <Link to={`/movies/${movieId}/cast`}>Cast</Link>
+            <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
           </nav>
           <Routes>
             <Route path="cast" element={<MovieCast />} />
