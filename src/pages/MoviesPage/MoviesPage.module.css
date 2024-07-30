@@ -1,0 +1,43 @@
+.moviesPage {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.moviesPage h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.searchBar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.searchBar input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+  width: 100%;
+  max-width: 600px;
+}
+
+.searchBar button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #e50914;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.searchBar button:hover {
+  background-color: #f40612;
+}

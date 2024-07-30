@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { searchMovies } from "../../services/api";
 import MovieList from "../../components/MovieList/MovieList";
+import s from "./MoviesPage.module.css";
 
 const MoviesPage = () => {
   const [query, setQuery] = useState("");
@@ -18,16 +19,17 @@ const MoviesPage = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSearch}>
+    <div className={s.moviesPage}>
+      <h1>Search Movies</h1>
+      <div className={s.searchBar}>
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search for movies..."
         />
-        <button type="submit">Search</button>
-      </form>
-      {error && <p>Something went wrong...</p>}
+        <button onClick={handleSearch}>Search</button>
+      </div>
       <MovieList movies={movies} />
     </div>
   );

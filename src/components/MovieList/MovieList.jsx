@@ -4,11 +4,11 @@ import s from "./MovieList.module.css";
 const MovieList = ({ movies, children, state }) => {
   return (
     <>
-      <div className={s.cont}>
+      <div>
         <h1>{children}</h1>
-        <ul>
+        <ul className={s.movieList}>
           {movies.map(({ title, id, poster_path }) => (
-            <li key={id}>
+            <li key={id} className={s.movieItem}>
               <img
                 src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
                 alt={title}
