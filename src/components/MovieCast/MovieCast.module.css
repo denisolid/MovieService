@@ -1,0 +1,44 @@
+.movieCast {
+  background-color: #222; /* Темніший фон для секції касту */
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.movieCast h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.castList {
+  display: flex;
+
+  gap: 20px;
+  list-style-type: none;
+}
+
+.castMember {
+  max-width: 200px;
+  background: #333;
+  border-radius: 8px;
+
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.castMember:hover {
+  transform: scale(1.05);
+}
+
+.castMember img {
+  object-fit: cover;
+}
+
+.castMember p {
+  margin: 10px;
+  font-size: 0.9rem;
+}
+
+.castMember h3 {
+  color: #ca1818;
+}
