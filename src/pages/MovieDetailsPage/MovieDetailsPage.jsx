@@ -3,6 +3,7 @@ import { useParams, Routes, Route, Link, useLocation } from "react-router-dom";
 import { fetchMovieDetails } from "../../services/api";
 import MovieCast from "../../components/MovieCast/MovieCast";
 import MovieReviews from "../../components/MovieReviews/MovieReviews";
+import s from "./MovieDetailsPage.module.css";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
@@ -24,16 +25,16 @@ const MovieDetailsPage = () => {
   }, [movieId]);
 
   return (
-    <div>
+    <div className={s.movieDetailsPage}>
       {movie && (
         <>
           <h1>{movie.title}</h1>
-          <p>{movie.overview}</p>
+          <p className={s.overview}>{movie.overview}</p>
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
           />
-          <nav>
+          <nav className={s.links}>
             <Link to={`/movies/${movieId}/cast`}>Cast</Link>
             <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
           </nav>
