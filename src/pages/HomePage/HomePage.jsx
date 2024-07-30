@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { fetchTrends } from "../../services/api";
 
-import { Audio } from "react-loader-spinner";
+import { TailSpin } from "react-loader-spinner";
 import MoviesList from "../../components/MoviesList/MoviesList";
 
 const HomePage = () => {
@@ -30,7 +30,7 @@ const HomePage = () => {
   return (
     <>
       {loading && (
-        <Audio
+        <TailSpin
           height="80"
           width="80"
           radius="9"

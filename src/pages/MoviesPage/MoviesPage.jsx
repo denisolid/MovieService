@@ -1,50 +1,36 @@
-import { useEffect, useState } from "react";
-import MoviesList from "../../components/MoviesList/MoviesList";
-import { fetchTrends } from "../../services/api";
-import SearchBar from "../../components/SearchBar/SearchBar";
-import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { searchMovies } from "../services/api";
+import MoviesList from "../components/MoviesList/MoviesList";
 
 const MoviesPage = () => {
+  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const filterValue = searchParams.get("query") ?? "";
-  useEffect(() => {
+  const [error, setError] = useState(null);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
     try {
-      const getData = async () => {
-        const data = await fetchTrends();
-        setMovies(data);
-        console.log(movies);
-      };
-      getData();
+      const response = await searchMovies(query);
+      setMovies(response.data.results);
     } catch (error) {
-      console.log(error);
+      setError(error);
     }
-    // fetchUsers().then((data) => setUsers(data));
-  }, []);
-
-  const handleChangeFilter = (newValue) => {
-    if (!newValue) {
-      return setSearchParams({});
-    }
-    searchParams.set("query", newValue);
-
-    setSearchParams(searchParams);
   };
 
-  // const filteredData = movies.filter(
-  //   (movie) =>
-  //     movie.firstName.toLowerCase().includes(filterValue.toLowerCase()) ||
-  //     movie.lastName.toLowerCase().includes(filterValue.toLowerCase())
-  // );
-
   return (
-    <>
-      <SearchBar
-        handleChangeFilter={handleChangeFilter}
-        filterValue={filterValue}
-      />
-      {/* <MoviesList movies={filteredData} /> */}
-    </>
+    <div>
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
+      {error && <p>Something went wrong...</p>}
+      <MoviesList movies={movies} />
+    </div>
   );
 };
+
 export default MoviesPage;

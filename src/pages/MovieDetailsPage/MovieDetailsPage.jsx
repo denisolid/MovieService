@@ -1,57 +1,48 @@
-import { Suspense, useEffect, useRef, useState } from "react";
-import {
-  Link,
-  NavLink,
-  Outlet,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
-import { fetchDetails } from "../../services/api";
+import { useEffect, useState } from "react";
+import { useParams, Routes, Route, Link, useLocation } from "react-router-dom";
+import { fetchMovieDetails } from "../services/api";
+import MovieCast from "../components/MovieCast/MovieCast";
+import MovieReviews from "../components/MovieReviews/MovieReviews";
 
 const MovieDetailsPage = () => {
-  const params = useParams();
-  console.log(params);
+  const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
-  // const navigate = useNavigate();
   const location = useLocation();
-  const goBackRef = useRef(location?.state || "/movies");
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     navigate("/users");
-  //   }, 15000);
-  // }, [navigate]);
 
   useEffect(() => {
-    const fetchMovieDetails=async()=>{
+    const fetchMovie = async () => {
       try {
-        
+        const response = await fetchMovieDetails(movieId);
+        setMovie(response.data);
+        console.log(location);
       } catch (error) {
-        
+        console.error(error);
       }
-    }
+    };
 
-  if (!movie) {
-    return <h2>Loading...</h2>;
-  }
+    fetchMovie();
+  }, [movieId]);
+
   return (
     <div>
-      <Link to={goBackRef.current}>Go back to movies</Link>
-      <p>Movie details #{params.movieId}</p>
-      <img src={movie.image} />
-      <h2>
-        {movie.firstName} 
-      </h2>
-      <p>Email: {movie.email}</p>
-      <p>Age: {movie.age}</p>
-      <div>
-        <NavLink to="cast">Cast</NavLink>
-        <NavLink to="reviews">Reviews</NavLink>
-      </div>
-      <Suspense fallback={<h2>Loading your data</h2>}>
-        <Outlet />
-      </Suspense>
+      {movie && (
+        <>
+          <h1>{movie.title}</h1>
+          <p>{movie.overview}</p>
+          <img
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            alt={movie.title}
+          />
+          <nav>
+            <Link to="cast">Cast</Link>
+            <Link to="reviews">Reviews</Link>
+          </nav>
+          <Routes>
+            <Route path="cast" element={<MovieCast />} />
+            <Route path="reviews" element={<MovieReviews />} />
+          </Routes>
+        </>
+      )}
     </div>
   );
 };

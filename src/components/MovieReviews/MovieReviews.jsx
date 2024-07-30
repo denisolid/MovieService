@@ -1,37 +1,37 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchReviews } from "../../services/api";
+import { fetchMovieReviews } from "../services/api";
 
-const UserAddress = () => {
-  const params = useParams();
-  const [user, setUser] = useState(null);
+const MovieReviews = () => {
+  const { movieId } = useParams();
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    fetchReviews(params.userId).then((data) => setUser(data));
-  }, [params.userId]);
+    const fetchReviews = async () => {
+      try {
+        const response = await fetchMovieReviews(movieId);
+        setReviews(response.data.results);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  if (!user) {
-    return <p>Loading...</p>;
-  }
-
-  if (!user.address) {
-    return <p>No address available</p>;
-  }
+    fetchReviews();
+  }, [movieId]);
 
   return (
     <div>
-      <p>Address: {user.address.address}</p>
-      <p>City: {user.address.city}</p>
-      <p>State: {user.address.state}</p>
-      <p>State Code: {user.address.stateCode}</p>
-      <p>Postal Code: {user.address.postalCode}</p>
-      <p>
-        Coordinates: Lat {user.address.coordinates.lat}, Lng{" "}
-        {user.address.coordinates.lng}
-      </p>
-      <p>Country: {user.address.country}</p>
+      <h3>Reviews</h3>
+      <ul>
+        {reviews.map((review) => (
+          <li key={review.id}>
+            <h4>{review.author}</h4>
+            <p>{review.content}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default UserAddress;
+export default MovieReviews;

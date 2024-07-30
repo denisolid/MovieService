@@ -1,22 +1,36 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchCredits } from "../../services/api";
+import { fetchMovieCast } from "../services/api";
 
-const UserPosts = () => {
-  const params = useParams();
-  const [posts, setPosts] = useState([]);
+const MovieCast = () => {
+  const { movieId } = useParams();
+  const [cast, setCast] = useState([]);
+
   useEffect(() => {
-    fetchCredits(params.userId).then((data) => setPosts(data));
-  }, [params.userId]);
+    const fetchCast = async () => {
+      try {
+        const response = await fetchMovieCast(movieId);
+        setCast(response.data.cast);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchCast();
+  }, [movieId]);
+
   return (
     <div>
+      <h3>Cast</h3>
       <ul>
-        {posts.map((post) => (
-          <li key={post.id}>{post.title}</li>
+        {cast.map((actor) => (
+          <li key={actor.id}>
+            {actor.name} as {actor.character}
+          </li>
         ))}
       </ul>
     </div>
   );
 };
 
-export default UserPosts;
+export default MovieCast;
