@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import s from "./MoviesList.module.css";
+import s from "./MovieList.module.css";
 
-const MoviesList = ({ movies, children, state }) => {
+const MovieList = ({ movies, children, state }) => {
   return (
     <>
       <div className={s.cont}>
@@ -25,4 +25,4 @@ const MoviesList = ({ movies, children, state }) => {
   );
 };
 
-export default MoviesList;
+export default MovieList;

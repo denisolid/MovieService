@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchTrends } from "../../services/api";
 
 import { TailSpin } from "react-loader-spinner";
-import MoviesList from "../../components/MoviesList/MoviesList";
+import MoviesList from "../../components/MovieList/MovieList";
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);

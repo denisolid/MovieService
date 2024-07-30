@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { searchMovies } from "../services/api";
-import MoviesList from "../components/MoviesList/MoviesList";
+import { searchMovies } from "../../services/api";
+import MovieList from "../../components/MovieList/MovieList";
 
 const MoviesPage = () => {
   const [query, setQuery] = useState("");
@@ -28,7 +28,7 @@ const MoviesPage = () => {
         <button type="submit">Search</button>
       </form>
       {error && <p>Something went wrong...</p>}
-      <MoviesList movies={movies} />
+      <MovieList movies={movies} />
     </div>
   );
 };
