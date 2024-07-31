@@ -1,35 +1,59 @@
 import { useEffect, useState } from "react";
-import { useParams, Routes, Route, Link, useLocation } from "react-router-dom";
+import {
+  useParams,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { fetchMovieDetails } from "../../services/api";
 import MovieCast from "../../components/MovieCast/MovieCast";
 import MovieReviews from "../../components/MovieReviews/MovieReviews";
-import GoBackBtn from "../../components/GoBackBtn/GoBackBtn";
+import Loader from "../../components/Loader/Loader";
 import s from "./MovieDetailsPage.module.css";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovie = async () => {
+      setLoading(true);
       try {
         const response = await fetchMovieDetails(movieId);
         setMovie(response.data);
         console.log(location);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchMovie();
   }, [movieId]);
 
+  const handleGoBack = () => {
+    if (location.state && location.state.from) {
+      navigate(location.state.from, { state: location.state.state });
+    } else {
+      navigate("/movies");
+    }
+  };
+
   return (
     <div>
-      {movie && (
+      {loading && <Loader />}
+      {movie && !loading && (
         <>
-          <GoBackBtn path={goBack.current}>Back to movies</GoBackBtn>
+          <button className={s.goBackButton} onClick={handleGoBack}>
+            Go Back
+          </button>
+
           <div className={s.movieDetailsPage}>
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -50,8 +74,12 @@ const MovieDetailsPage = () => {
           </div>
 
           <nav className={s.links}>
-            <Link to={`/movies/${movieId}/cast`}>Cast</Link>
-            <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
+            <Link to={`/movies/${movieId}/cast`} state={location.state}>
+              Cast
+            </Link>
+            <Link to={`/movies/${movieId}/reviews`} state={location.state}>
+              Reviews
+            </Link>
           </nav>
           <Routes>
             <Route path="cast" element={<MovieCast />} />
