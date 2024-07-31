@@ -16,3 +16,13 @@
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.noReviews {
+  font-size: 1.5rem;
+  text-align: center;
+  color: #e50914;
+}
+
+.title {
+  color: #e50914;
+}
