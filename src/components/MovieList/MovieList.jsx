@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import s from "./MovieList.module.css";
 
 const MovieList = ({ movies, children, state }) => {
+  const location = useLocation();
   return (
     <>
       <div>
@@ -9,12 +10,17 @@ const MovieList = ({ movies, children, state }) => {
         <ul className={s.movieList}>
           {movies.map(({ title, id, poster_path }) => (
             <li key={id} className={s.movieCard}>
-              <img
-                src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-                alt={title}
-              />
-              <Link to={`/movies/${id}`} state={state}>
-                <p>{title}</p>
+              <Link
+                to={`/movies/${id}`}
+                state={{ from: location, state }}
+                className={s.movieLink}
+              >
+                <img
+                  src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+                  alt={title}
+                />
+
+                <h3>{title}</h3>
               </Link>
             </li>
           ))}
