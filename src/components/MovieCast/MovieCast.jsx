@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchMovieCast } from "../../services/api";
+import Loader from "../../components/Loader/Loader";
 import s from "./MovieCast.module.css";
 
 const MovieCast = () => {
   const { movieId } = useParams();
   const [cast, setCast] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchCast = async () => {
+      setLoading(true);
       try {
         const response = await fetchMovieCast(movieId);
         setCast(response.data.cast);
       } catch (error) {
-        console.error(error);
+        setError(error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -22,19 +28,29 @@ const MovieCast = () => {
 
   return (
     <div className={s.movieCast}>
-      <h3>Cast</h3>
-      <ul className={s.castList}>
-        {cast.map(({ profile_path, character, original_name, cast_id }) => (
-          <li key={cast_id} className={s.castMember}>
-            <img
-              src={`https://image.tmdb.org/t/p/w500/${profile_path}`}
-              alt={original_name}
-            />
-            <h3>{original_name}</h3>
-            <p>Character: {character}</p>
-          </li>
-        ))}
-      </ul>
+      {loading && <Loader />}
+      {error && <p>Something went wrong...</p>}
+      {!loading && cast.length > 0 && (
+        <>
+          <h3>Cast</h3>
+          <ul className={s.castList}>
+            {cast.map(({ profile_path, character, original_name, cast_id }) => (
+              <li key={cast_id} className={s.castMember}>
+                {profile_path ? (
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500/${profile_path}`}
+                    alt={original_name}
+                  />
+                ) : (
+                  <div className={s.noImage}>No Image</div>
+                )}
+                <h3>{original_name}</h3>
+                <p>Character: {character}</p>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 };
