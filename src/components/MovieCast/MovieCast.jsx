@@ -23,7 +23,7 @@ const MovieCast = () => {
   return (
     <div className={s.movieCast}>
       <h3>Cast</h3>
-      <ul className={s.movieList}>
+      <ul className={s.castList}>
         {cast.map(({ profile_path, character, original_name, cast_id }) => (
           <li key={cast_id} className={s.castMember}>
             <img
