@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   useParams,
-  Routes,
-  Route,
   Link,
   useLocation,
   useNavigate,
+  Outlet,
 } from "react-router-dom";
 import { fetchMovieDetails } from "../../services/api";
-import MovieCast from "../../components/MovieCast/MovieCast";
-import MovieReviews from "../../components/MovieReviews/MovieReviews";
 import Loader from "../../components/Loader/Loader";
 import s from "./MovieDetailsPage.module.css";
 
@@ -17,8 +14,11 @@ const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
+
+  const prevLocation = useRef(location.state?.from || "/movies");
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -28,7 +28,7 @@ const MovieDetailsPage = () => {
         setMovie(response.data);
         console.log(location);
       } catch (error) {
-        console.error(error);
+        setError(error);
       } finally {
         setLoading(false);
       }
@@ -38,16 +38,13 @@ const MovieDetailsPage = () => {
   }, [movieId]);
 
   const handleGoBack = () => {
-    if (location.state && location.state.from) {
-      navigate(location.state.from, { state: location.state.state });
-    } else {
-      navigate("/movies");
-    }
+    navigate(prevLocation.current);
   };
 
   return (
     <div>
       {loading && <Loader />}
+      {error && <p>Something went wrong...</p>}
       {movie && !loading && (
         <>
           <button className={s.goBackButton} onClick={handleGoBack}>
@@ -81,10 +78,7 @@ const MovieDetailsPage = () => {
               Reviews
             </Link>
           </nav>
-          <Routes>
-            <Route path="cast" element={<MovieCast />} />
-            <Route path="reviews" element={<MovieReviews />} />
-          </Routes>
+          <Outlet />
         </>
       )}
     </div>
