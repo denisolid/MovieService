@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { fetchMovieCast } from "../../services/api";
 import Loader from "../../components/Loader/Loader";
 import s from "./MovieCast.module.css";
@@ -34,20 +34,24 @@ const MovieCast = () => {
         <>
           <h3>Cast</h3>
           <ul className={s.castList}>
-            {cast.map(({ profile_path, character, original_name, cast_id }) => (
-              <li key={cast_id} className={s.castMember}>
-                {profile_path ? (
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500/${profile_path}`}
-                    alt={original_name}
-                  />
-                ) : (
-                  <div className={s.noImage}>No Image</div>
-                )}
-                <h3>{original_name}</h3>
-                <p>Character: {character}</p>
-              </li>
-            ))}
+            {cast.map(
+              ({ profile_path, character, original_name, cast_id, id }) => (
+                <li key={cast_id} className={s.castMember}>
+                  <Link to={`/actors/${id}`} className={s.castLink}>
+                    {profile_path ? (
+                      <img
+                        src={`https://image.tmdb.org/t/p/w500/${profile_path}`}
+                        alt={original_name}
+                      />
+                    ) : (
+                      <div className={s.noImage}>No Image</div>
+                    )}
+                    <h3>{original_name}</h3>
+                    <p>Character: {character}</p>
+                  </Link>
+                </li>
+              )
+            )}
           </ul>
         </>
       )}
