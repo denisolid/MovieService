@@ -16,6 +16,9 @@ export const Navigation = () => {
         <NavLink className={buildLinkClass} to="/movies">
           Movies
         </NavLink>
+        <NavLink className={buildLinkClass} to="/actors">
+          Popular Actors
+        </NavLink>
       </div>
     </>
   );
