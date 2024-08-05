@@ -1,0 +1,27 @@
+/* src/components/ActorList/ActorList.module.css */
+.actorList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.actorCard {
+  width: 200px;
+  text-align: center;
+}
+
+.actorLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.actorCard img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.actorCard p {
+  margin-top: 10px;
+  font-size: 1rem;
+}
